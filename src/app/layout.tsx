@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Hind_Siliguri } from "next/font/google";
+import { Noto_Sans_Bengali } from "next/font/google";
 import "./globals.css";
 import NavHeader from "@/component/NavHeader";
 import PriceMarquee from "@/component/PriceMarquee";
 import Footer from "@/component/Footer";
+import { Suspense } from "react";
 
-const hindSiliguri = Hind_Siliguri({
-  subsets: ["bengali", "latin"],
+const notoSansBengali = Noto_Sans_Bengali({
+  subsets: ["bengali"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-hind-siliguri",
 });
 
 export const metadata: Metadata = {
@@ -19,9 +19,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
   return (
     <html lang="bn" cz-shortcut-listen="true">
-      <body className={hindSiliguri.className}>
-        <NavHeader></NavHeader>
-        <PriceMarquee></PriceMarquee>
+      <body className={notoSansBengali.className} >
+        <Suspense fallback='Loading...'>
+          <NavHeader></NavHeader>
+          <PriceMarquee></PriceMarquee>
+        </Suspense>
         {children}
         <Footer></Footer>
       </body>
