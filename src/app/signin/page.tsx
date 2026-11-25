@@ -1,11 +1,74 @@
+"use client";
+
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 
 const SignInPage = () => {
+    const router = useRouter();
+
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.currentTarget);
+
+        const user = Object.fromEntries(formData.entries()) as {
+            email: string;
+            password: string;
+        };
+
+        const { data, error } = await authClient.signIn.email({
+            email: user.email,
+            password: user.password,
+            callbackURL: "/",
+        });
+
+        if (error) {
+            toast.error(
+                error.message || "সাইন ইন করা সম্ভব হয়নি"
+            );
+            return;
+        }
+
+        if (data) {
+            toast.success("সাইন ইন সফল হয়েছে");
+            router.push("/");
+        }
+    };
+
+    const handleGoogleSignin = async () => {
+        const { error } = await authClient.signIn.social({
+            provider: "google",
+            callbackURL: "/",
+        });
+
+        if (error) {
+            toast.error(
+                error.message || "Google দিয়ে সাইন ইন করা সম্ভব হয়নি"
+            );
+        }
+    };
+
+    const handleGithubSignin = async () => {
+        const { error } = await authClient.signIn.social({
+            provider: "github",
+            callbackURL: "/",
+        });
+
+        if (error) {
+            toast.error(
+                error.message || "GitHub দিয়ে সাইন ইন করা সম্ভব হয়নি"
+            );
+        }
+    };
+
     return (
-        <main className="bg-[#f3f8f4]">
+        <main className="bg-[#f3f8f4] min-h-screen">
             <div className="max-w-7xl mx-auto px-4 py-10 md:py-14">
+
                 {/* Heading */}
                 <div className="text-center mb-8">
                     <h1 className="text-3xl md:text-4xl font-bold text-[#263128]">
@@ -19,7 +82,13 @@ const SignInPage = () => {
 
                 {/* Sign In Card */}
                 <div className="max-w-lg mx-auto bg-white border border-gray-200 rounded-2xl p-6 md:p-8 shadow-sm">
-                    <form className="space-y-5">
+
+                    {/* Sign In Form */}
+                    <form
+                        onSubmit={onSubmit}
+                        className="space-y-5"
+                    >
+
                         {/* Email */}
                         <div>
                             <label
@@ -34,6 +103,8 @@ const SignInPage = () => {
                                 id="email"
                                 name="email"
                                 placeholder="you@example.com"
+                                autoComplete="email"
+                                required
                                 className="input w-full h-12 rounded-xl border border-gray-300 bg-white text-[#263128] placeholder:text-gray-400 focus:border-green-700 focus:outline-none"
                             />
                         </div>
@@ -52,6 +123,8 @@ const SignInPage = () => {
                                 id="password"
                                 name="password"
                                 placeholder="কমপক্ষে ৮ অক্ষর"
+                                autoComplete="current-password"
+                                required
                                 className="input w-full h-12 rounded-xl border border-gray-300 bg-white text-[#263128] placeholder:text-gray-400 focus:border-green-700 focus:outline-none"
                             />
                         </div>
@@ -76,9 +149,15 @@ const SignInPage = () => {
                         <div className="h-px bg-gray-200 flex-1"></div>
                     </div>
 
-                    {/* Social Login */}
+                    {/* Social Authentication */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <button className="btn h-12 bg-white border border-gray-300 rounded-xl text-[#263128] hover:bg-gray-50">
+
+                        {/* Google */}
+                        <button
+                            type="button"
+                            onClick={handleGoogleSignin}
+                            className="btn h-12 bg-white border border-gray-300 rounded-xl text-[#263128] hover:bg-gray-50"
+                        >
                             <FcGoogle className="text-xl shrink-0" />
 
                             <span className="text-sm whitespace-nowrap">
@@ -86,7 +165,12 @@ const SignInPage = () => {
                             </span>
                         </button>
 
-                        <button className="btn h-12 bg-white border border-gray-300 rounded-xl text-[#263128] hover:bg-gray-50">
+                        {/* GitHub */}
+                        <button
+                            type="button"
+                            onClick={handleGithubSignin}
+                            className="btn h-12 bg-white border border-gray-300 rounded-xl text-[#263128] hover:bg-gray-50"
+                        >
                             <FaGithub className="text-xl shrink-0" />
 
                             <span className="text-sm whitespace-nowrap">
@@ -98,6 +182,7 @@ const SignInPage = () => {
                     {/* Sign Up Link */}
                     <p className="text-center text-sm text-gray-600 mt-6">
                         অ্যাকাউন্ট নেই?{" "}
+
                         <Link
                             href="/signup"
                             className="text-green-700 font-semibold hover:underline"
@@ -116,6 +201,7 @@ const SignInPage = () => {
                         ← হোম পেজে ফিরে যান
                     </Link>
                 </div>
+
             </div>
         </main>
     );
