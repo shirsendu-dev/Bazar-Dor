@@ -205,7 +205,7 @@ const ProductDetailsPage = async ({
                     </div>
 
                     {/* Market Table */}
-                    <h2 className="text-xl font-bold text-[#263128] mt-8 mb-4">
+                    <h2 className="text-xl md:text-2xl font-bold text-[#263128] mt-8 mb-4">
                         বাজারভিত্তিক আজকের দাম
                     </h2>
 
