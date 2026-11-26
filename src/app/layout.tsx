@@ -7,6 +7,9 @@ import Footer from "@/component/Footer";
 import { Suspense } from "react";
 import { Toaster } from "react-hot-toast";
 
+import { setServers } from "node:dns/promises";
+setServers(["1.1.1.1", "8.8.8.8"])
+
 const notoSansBengali = Noto_Sans_Bengali({
   subsets: ["bengali"],
   weight: ["400", "500", "600", "700"],
