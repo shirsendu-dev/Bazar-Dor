@@ -1,5 +1,6 @@
-import CategoryProducts from "@/component/CategoryProducts";
 
+import CategoryProducts from "@/component/CategoryProducts";
+import { notFound } from "next/navigation";
 
 interface CategoryPageProps {
     params: Promise<{
@@ -7,21 +8,24 @@ interface CategoryPageProps {
     }>;
 }
 
-const CategoryPage = async ({ params }: CategoryPageProps) => {
+const CategoryPage = async ({
+    params,
+}: CategoryPageProps) => {
     const { categoryId } = await params;
 
-    // Fetch category
+    // Fetch Category
     const categoryRes = await fetch(
         `https://openapi.programming-hero.com/api/bazardor/categories/${categoryId}`
     );
 
+    // If category does not exist
     if (!categoryRes.ok) {
-        throw new Error("Failed to fetch category...");
+        notFound();
     }
 
     const category = await categoryRes.json();
 
-    // Fetch category products
+    // Fetch Category Products
     const productsRes = await fetch(
         `https://openapi.programming-hero.com/api/bazardor/products?category=${categoryId}`
     );
@@ -33,26 +37,30 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
     const products = await productsRes.json();
 
     return (
-        <main className="bg-[#f3f8f4] min-h-screen">
-            <div className="max-w-7xl mx-auto px-4 md:px-6 py-6 md:py-8">
+        <main className="min-h-screen bg-[#f3f8f4]">
+            <div className="mx-auto max-w-7xl px-4 py-6 md:px-6 md:py-8">
 
                 {/* Category Header */}
-                <div className="bg-white border border-gray-200 rounded-2xl p-5 md:p-6">
+                <div className="rounded-2xl border border-gray-200 bg-white p-5 md:p-6">
                     <div className="flex items-center gap-4">
-                        <div className="w-14 h-14 md:w-16 md:h-16 bg-[#f3f8f4] rounded-xl flex items-center justify-center text-3xl">
+
+                        {/* Category Icon */}
+                        <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-[#f3f8f4] text-3xl md:h-16 md:w-16">
                             {category.icon}
                         </div>
 
+                        {/* Category Info */}
                         <div>
-                            <h1 className="text-2xl md:text-3xl font-bold text-[#263128]">
+                            <h1 className="text-2xl font-bold text-[#263128] md:text-3xl">
                                 {category.nameBn}
                             </h1>
 
-                            <p className="text-gray-500 mt-1">
-                                {products.length.toLocaleString("bn-BD")}টি পণ্যের আজকের দাম ও
-                                পরিবর্তন
+                            <p className="mt-1 text-gray-500">
+                                {products.length.toLocaleString("bn-BD")}
+                                টি পণ্যের আজকের দাম ও পরিবর্তন
                             </p>
                         </div>
+
                     </div>
                 </div>
 

@@ -5,6 +5,7 @@ import NavHeader from "@/component/NavHeader";
 import PriceMarquee from "@/component/PriceMarquee";
 import Footer from "@/component/Footer";
 import { Suspense } from "react";
+import { Toaster } from "react-hot-toast";
 
 const notoSansBengali = Noto_Sans_Bengali({
   subsets: ["bengali"],
@@ -26,6 +27,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         </Suspense>
         {children}
         <Footer></Footer>
+        
+        <Toaster></Toaster>
       </body>
     </html>
   );

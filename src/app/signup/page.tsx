@@ -2,7 +2,7 @@
 
 import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
@@ -10,10 +10,10 @@ import { FaGithub } from "react-icons/fa";
 const SignUpPage = () => {
     const router = useRouter();
 
-    const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const formData = new FormData(e.Target);
+        const formData = new FormData(e.currentTarget);
 
         const user = Object.fromEntries(formData.entries()) as {
             name: string;
@@ -33,8 +33,9 @@ const SignUpPage = () => {
         }
 
         const { data, error } = await authClient.signUp.email({
-            ...user,
-            callbackURL: "/",
+            name: user.name,
+            email: user.email,
+            password: user.password,
         });
 
         if (error) {
@@ -45,15 +46,17 @@ const SignUpPage = () => {
         }
 
         if (data) {
-            toast.success("আপনার অ্যাকাউন্ট সফলভাবে তৈরি হয়েছে");
+            toast.success("Account created successfully");
+
             router.push("/");
+            router.refresh();
         }
     };
 
     const handleGoogleSignin = async () => {
         const { error } = await authClient.signIn.social({
             provider: "google",
-            callbackURL: "/",
+            callbackURL: "/?auth=success",
         });
 
         if (error) {
@@ -66,7 +69,7 @@ const SignUpPage = () => {
     const handleGithubSignin = async () => {
         const { error } = await authClient.signIn.social({
             provider: "github",
-            callbackURL: "/",
+            callbackURL: "/?auth=success",
         });
 
         if (error) {
@@ -94,9 +97,10 @@ const SignUpPage = () => {
                 {/* Sign Up Card */}
                 <div className="max-w-lg mx-auto bg-white border border-gray-200 rounded-2xl p-6 md:p-8 shadow-sm">
 
-                    {/* Sign Up Form */}
-                    <form onSubmit={onSubmit} className="space-y-5">
-
+                    <form
+                        onSubmit={onSubmit}
+                        className="space-y-5"
+                    >
                         {/* Name */}
                         <div>
                             <label
@@ -177,7 +181,7 @@ const SignUpPage = () => {
                             />
                         </div>
 
-                        {/* Sign Up Button */}
+                        {/* Submit */}
                         <button
                             type="submit"
                             className="btn w-full h-12 bg-green-700 text-white border-none rounded-xl text-base font-semibold hover:bg-green-800"
@@ -197,10 +201,8 @@ const SignUpPage = () => {
                         <div className="h-px bg-gray-200 flex-1"></div>
                     </div>
 
-                    {/* Social Authentication */}
+                    {/* Social */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-
-                        {/* Google */}
                         <button
                             type="button"
                             onClick={handleGoogleSignin}
@@ -213,7 +215,6 @@ const SignUpPage = () => {
                             </span>
                         </button>
 
-                        {/* GitHub */}
                         <button
                             type="button"
                             onClick={handleGithubSignin}
@@ -227,7 +228,7 @@ const SignUpPage = () => {
                         </button>
                     </div>
 
-                    {/* Sign In Link */}
+                    {/* Sign In */}
                     <p className="text-center text-sm text-gray-600 mt-6">
                         অ্যাকাউন্ট আছে?{" "}
 
@@ -240,7 +241,7 @@ const SignUpPage = () => {
                     </p>
                 </div>
 
-                {/* Back Home */}
+                {/* Home */}
                 <div className="text-center mt-7">
                     <Link
                         href="/"
