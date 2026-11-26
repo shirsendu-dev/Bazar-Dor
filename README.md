@@ -6,6 +6,16 @@ The application allows users to browse daily prices of essential products, explo
 
 ---
 
+## 🔗 Live Links
+
+🌐 **Live Website:**  
+https://bazar-dor-sb-shaon.vercel.app/
+
+💻 **GitHub Repository:**  
+https://github.com/shirsendu-dev/Bazar-Dor
+
+---
+
 ## ✨ Features
 
 ### 🏠 Responsive Home Page
@@ -380,7 +390,6 @@ This project demonstrates several important Next.js concepts:
 - `next/link`
 - `next/font`
 - `useRouter`
-- `usePathname`
 - Responsive layouts
 - Authentication integration
 - Database integration
@@ -418,21 +427,11 @@ Bazar Dor uses the Programming Hero Bazar Dor API.
 https://openapi.programming-hero.com/api/bazardor
 ```
 
----
-
 ## All Categories
 
 ```text
 GET /api/bazardor/categories
 ```
-
-Example:
-
-```text
-https://openapi.programming-hero.com/api/bazardor/categories
-```
-
----
 
 ## Single Category
 
@@ -446,21 +445,11 @@ Example:
 https://openapi.programming-hero.com/api/bazardor/categories/chal
 ```
 
----
-
 ## All Products
 
 ```text
 GET /api/bazardor/products
 ```
-
-Example:
-
-```text
-https://openapi.programming-hero.com/api/bazardor/products
-```
-
----
 
 ## Filter Products by Category
 
@@ -473,8 +462,6 @@ Example:
 ```text
 https://openapi.programming-hero.com/api/bazardor/products?category=chal
 ```
-
----
 
 ## Single Product
 
@@ -492,13 +479,10 @@ https://openapi.programming-hero.com/api/bazardor/products/1
 
 # 📂 Project Structure
 
-A simplified representation of the project:
-
 ```text
 src/
 │
 ├── app/
-│   │
 │   ├── api/
 │   │   └── auth/
 │   │       └── [...all]/
@@ -543,8 +527,6 @@ src/
 └── proxy.ts
 ```
 
-The exact structure may contain additional project files.
-
 ---
 
 # 🔗 Application Routes
@@ -565,26 +547,20 @@ The exact structure may contain additional project files.
 ## 1. Clone the Repository
 
 ```bash
-git clone YOUR_REPOSITORY_URL
+git clone https://github.com/shirsendu-dev/Bazar-Dor.git
 ```
-
----
 
 ## 2. Enter the Project Directory
 
 ```bash
-cd YOUR_PROJECT_FOLDER
+cd Bazar-Dor
 ```
-
----
 
 ## 3. Install Dependencies
 
 ```bash
 npm install
 ```
-
----
 
 ## 4. Configure Environment Variables
 
@@ -604,8 +580,6 @@ GITHUB_CLIENT_SECRET=your_github_client_secret
 ```
 
 > Never commit real environment variables, API secrets, or OAuth credentials to GitHub.
-
----
 
 ## 5. Start the Development Server
 
@@ -637,19 +611,29 @@ http://localhost:3000/api/auth/callback/google
 http://localhost:3000/api/auth/callback/github
 ```
 
-When deploying the application, replace `localhost:3000` with the production domain in the Google and GitHub OAuth settings.
+For production:
+
+### Google
+
+```text
+https://bazar-dor-sb-shaon.vercel.app/api/auth/callback/google
+```
+
+### GitHub
+
+```text
+https://bazar-dor-sb-shaon.vercel.app/api/auth/callback/github
+```
 
 ---
 
 # 📦 Production Build
 
-Create a production build:
-
 ```bash
 npm run build
 ```
 
-Run the production server:
+Then:
 
 ```bash
 npm start
@@ -659,14 +643,18 @@ npm start
 
 # ☁️ Deployment
 
-The application can be deployed using **Vercel**.
+The project is deployed on **Vercel**.
 
-Before deployment, make sure to configure all required environment variables in the Vercel project settings.
+Production URL:
 
-Also update:
+```text
+https://bazar-dor-sb-shaon.vercel.app/
+```
+
+For production, set:
 
 ```env
-BETTER_AUTH_URL=https://your-production-domain.com
+BETTER_AUTH_URL=https://bazar-dor-sb-shaon.vercel.app
 ```
 
 and configure the production Google and GitHub OAuth callback URLs.
@@ -696,15 +684,13 @@ This project was created to practice and strengthen knowledge of:
 17. Form handling
 18. User profile management
 19. Toast notifications
-20. Loading states
+20. Skeleton loading states
 21. Custom 404 handling
-22. Production deployment
+22. Production deployment with Vercel
 
 ---
 
 # 🔮 Possible Future Improvements
-
-Possible improvements include:
 
 - 🔍 Product search
 - ⭐ Favorite products
@@ -724,6 +710,7 @@ Possible improvements include:
 **Shirsendu Biswas**
 
 Full-Stack Web Development Learner & WordPress Developer
+
 
 ---
 

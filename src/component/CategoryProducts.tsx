@@ -22,7 +22,7 @@ interface CategoryProductsProps {
 const CategoryProducts = ({ products }: CategoryProductsProps) => {
     const [sort, setSort] = useState("default");
 
-    let sortedProducts = [...products];
+    const sortedProducts = [...products];
 
     if (sort === "low") {
         sortedProducts.sort((a, b) => a.today - b.today);
