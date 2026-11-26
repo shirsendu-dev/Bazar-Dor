@@ -21,7 +21,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="bn" cz-shortcut-listen="true">
       <body className={notoSansBengali.className} >
-        <Suspense fallback='Loading...'>
+        <Suspense>
           <NavHeader></NavHeader>
           <PriceMarquee></PriceMarquee>
         </Suspense>

@@ -24,13 +24,9 @@ const HomePage = async () => {
 
   const products: Product[] = await res.json();
 
-  const increasedProducts = products
-    .filter((product) => product.change.dir === "up")
-    .slice(0, 6);
+  const increasedProducts = products.filter((product) => product.change.dir === "up").slice(0, 6);
 
-  const decreasedProducts = products
-    .filter((product) => product.change.dir === "down")
-    .slice(0, 6);
+  const decreasedProducts = products.filter((product) => product.change.dir === "down").slice(0, 6);
 
   return (
     <main className="bg-[#f3f8f4] min-h-screen">
